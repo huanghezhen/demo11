@@ -1,0 +1,432 @@
+vi /etc/ssh/sshd_config
+
+
+apt update
+apt-get -y install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
+add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+apt update && apt install -y docker-ce
+
+      
+curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+
+
+
+
+
+
+gitlab-rails console
+
+docker exec -it 87be265bdaa8 /bin/bash
+
+Notify.test_email('2200954927@qq.com', 'Message Subject', 'Message Body').deliver_now
+
+
+
+
+
+version: '3'
+services:
+  gitlab:
+    image: 'twang2218/gitlab-ce-zh'
+    restart: always
+    hostname: '192.168.197.145'
+    environment:
+      TZ: 'Asia/Shanghai'
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://192.168.197.145'
+        gitlab_rails['time_zone'] = 'Asia/Shanghai'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2222
+        gitlab_rails['smtp_enable'] = true
+        gitlab_rails['smtp_port'] = 465
+        gitlab_rails['smtp_authentication'] = "login"
+        gitlab_rails['smtp_enable_starttls_auto'] = true
+        gitlab_rails['smtp_tls'] = true
+        gitlab_rails['gitlab_email_enabled'] = true
+        gitlab_rails['smtp_address'] = "smtp.163.com"
+        gitlab_rails['smtp_domain'] = "163.com"
+        gitlab_rails['smtp_user_name'] = "huanghz97@163.com"
+        gitlab_rails['smtp_password'] = "h19970502h"
+        gitlab_rails['gitlab_email_from'] = 'huanghz97@163.com'
+        gitlab_rails['gitlab_email_display_name'] = 'huanghz97@163.com'
+        user['git_user_email'] = "huanghz97@163.com"
+    ports:
+      - '80:80'
+      - '2222:22'
+    volumes:
+      - ./config:/etc/gitlab
+      - ./data:/var/opt/gitlab
+      - ./logs:/var/log/gitlab
+      
+      
+      
+      
+version: '3.1'
+services:
+  nexus:
+    restart: always
+    image: sonatype/nexus3
+    container_name: nexus
+    ports:
+      - 8082:8081
+    volumes:
+      - nexus-data:/nexus-data
+
+volumes:
+  nexus-data:
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+<repositories>
+        <repository>
+            <id>nexus</id>
+            <name>Nexus Repository</name>
+            <url>http://192.168.197.145:8082/repository/maven-public/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>nexus</id>
+            <name>Nexus Plugin Repository</name>
+            <url>http://192.168.197.145:8082/repository/maven-public/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </pluginRepository>
+    </pluginRepositories>
+	
+	
+	
+	
+	
+<servers>
+	<server>
+      <id>nexus</id>
+      <username>admin</username>
+      <password>123456</password>
+    </server>
+  </servers>
+	
+	
+	<server>
+      <id>nexus</id>
+      <username>admin</username>
+      <password>123456</password>
+    </server>
+	<server>
+      <id>nexus-releases</id>
+      <username>admin</username>
+      <password>123456</password>
+    </server>
+	<server>
+      <id>nexus-snapshots</id>
+      <username>admin</username>
+      <password>123456</password>
+    </server>
+	
+	
+	<distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <name>Nexus Release Repository</name>
+            <url>http://192.168.197.145:8082/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>Nexus Snapshots Repository</name>
+            <url>http://192.168.197.145:8082/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+	
+	
+
+
+
+
+
+java -Dserver.port=8888 -Dcsp.sentinel.dashboard.server=localhost:8888 -Dproject.name=sentinel-dashboard -jar /usr/local/sentinel/sentinel-dashboard-1.6.2.jar
+
+
+docker-compose -f /usr/local/docker/nacos/nacos-docker/example/standalone-mysql.yaml up -d
+
+安装k8s报错
+echo "1" >/proc/sys/net/bridge/bridge-nf-call-iptables
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 修改主机名 以及 hosts
+hostnamectl set-hostname k8s-master01
+
+yum update -y 
+
+# 重启
+
+yum install -y conntrack ntpdate ntp ipvsadm ipset jq iptables curl sysstat libseccomp wget vimnet-tools git
+
+
+systemctl stop firewalld && systemctl disable firewalld
+
+yum -y install iptables-services && systemctl start iptables && systemctl enable iptables&& iptables -F && service iptables save
+
+
+swapoff -a && sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+
+setenforce 0 && sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
+
+cat > kubernetes.conf <<EOF
+net.bridge.bridge-nf-call-iptables=1
+net.bridge.bridge-nf-call-ip6tables=1
+net.ipv4.ip_forward=1
+net.ipv4.tcp_tw_recycle=0
+vm.swappiness=0 #禁止使用 swap 空间，只有当系统 OOM 时才允许使用它
+vm.overcommit_memory=1 #不检查物理内存是否够用
+vm.panic_on_oom=0 #开启 OOM
+fs.inotify.max_user_instances=8192
+fs.inotify.max_user_watches=1048576
+fs.file-max=52706963
+fs.nr_open=52706963
+net.ipv6.conf.all.disable_ipv6=1
+net.netfilter.nf_conntrack_max=2310720
+EOF
+
+
+cp kubernetes.conf /etc/sysctl.d/kubernetes.conf
+
+
+
+
+#设置系统时区为 中国/上海
+timedatectl set-timezone Asia/Shanghai
+#将当前的 UTC 时间写入硬件时钟
+timedatectl set-local-rtc 0
+#重启依赖于系统时间的服务
+systemctl restart rsyslog
+systemctl restart crond
+
+
+systemctl stop postfix && systemctl disable postfix
+
+#持久化保存日志的目录
+mkdir /var/log/journal 
+
+mkdir /etc/systemd/journald.conf.d
+
+cat > /etc/systemd/journald.conf.d/99-prophet.conf <<EOF
+[Journal]#持久化保存到磁盘
+Storage=persistent
+#压缩历史日志Compress=yes
+SyncIntervalSec=5m
+RateLimitInterval=30s
+RateLimitBurst=1000
+#最大占用空间 10G
+SystemMaxUse=10G
+#单日志文件最大 200M
+SystemMaxFileSize=200M
+#日志保存时间 2 周
+MaxRetentionSec=2week
+#不将日志转发到 syslog
+ForwardToSyslog=no
+EOF
+
+systemctl restart systemd-journald
+
+
+
+rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+#安装完成后检查 /boot/grub2/grub.cfg 中对应内核 menuentry 中是否包含 initrd16 配置，如果没有，再安装一次！
+yum --enablerepo=elrepo-kernel install -y kernel-lt
+#设置开机从新内核启动
+grub2-set-default 'CentOS Linux (4.4.197-1.el7.elrepo.x86_64) 7 (Core)'
+
+# 重启
+
+
+
+modprobe br_netfilter
+
+cat > /etc/sysconfig/modules/ipvs.modules <<EOF
+#!/bin/bash
+modprobe -- ip_vs
+modprobe -- ip_vs_rr
+modprobe -- ip_vs_wrr
+modprobe -- ip_vs_sh
+modprobe -- nf_conntrack_ipv4
+EOF
+
+
+chmod 755 /etc/sysconfig/modules/ipvs.modules && bash /etc/sysconfig/modules/ipvs.modules && lsmod | grep -e ip_vs -e nf_conntrack_ipv4
+
+yum install -y yum-utils device-mapper-persistent-data lvm2
+
+
+
+yum-config-manager \
+--add-repo \
+http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+
+yum install -y docker-ce
+
+##创建 /etc/docker 目录
+mkdir /etc/docker
+
+
+#配置 daemon.
+cat > /etc/docker/daemon.json <<EOF
+{
+  "registry-mirrors": ["https://iivjtnpj.mirror.aliyuncs.com"],
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {"max-size": "100m"},
+  "insecure-registries": [
+    "192.168.197.156"
+  ]
+}
+EOF
+
+mkdir -p /etc/systemd/system/docker.service.d
+
+#重启docker服务
+systemctl daemon-reload && systemctl restart docker && systemctl enable docker
+
+
+cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=http://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=0
+repo_gpgcheck=0
+gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
+http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+EOF
+
+yum -y install kubeadm-1.15.1 kubectl-1.15.1 kubelet-1.15.1
+
+systemctl enable kubelet.service
+
+sysctl -p /etc/sysctl.d/kubernetes.conf
+
+
+curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+
+chmod +x /usr/local/bin/docker-compose
+
+# 拍快照 克隆 修改hosts
+
+hostnamectl set-hostname k8s-node01
+hostnamectl set-hostname k8s-node02
+
+
+
+
+
+----------------------------------------k8s-init-01
+
+# 下面只需要在master上操作
+
+kubeadm config print init-defaults > kubeadm-config.yaml
+
+vim kubeadm-config.yaml
+
+# 修改为主节点 IP
+  advertiseAddress: 192.168.141.110
+# 修改镜像
+imageRepository: registry.aliyuncs.com/google_containers
+# 修改版本号
+kubernetesVersion: v1.15.1
+# 配置 POD 所在网段为我们虚拟机不重叠的网段（这里用的是 Flannel 默认网段）
+podSubnet: "10.244.0.0/16"
+# 添加
+---
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+featureGates:
+  SupportIPVSProxyMode: true
+mode: ipvs
+
+kubeadm init --config=kubeadm-config.yaml --experimental-upload-certs | tee kubeadm-init.log
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+  
+  
+  
+  
+# 安装从节点 (复制log信息 安装从节点)
+kubeadm join 192.168.141.110:6443 --token abcdef.0123456789abcdef \
+    --discovery-token-ca-cert-hash sha256:f0759e0d352c1a5de4444782b4a676460b2ea7a2876fa0accab572b8629b72c8
+
+
+wget https://docs.projectcalico.org/v3.8/manifests/calico.yaml
+
+vim calico.yaml
+
+# 修改第 611 行，将 192.168.0.0/16 修改为 10.244.0.0/16，可以通过如下命令快速查找
+
+kubectl apply -f calico.yaml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
